@@ -7,52 +7,86 @@ import Chip from '@mui/material/Chip';
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
+import IconButton from '@mui/material/IconButton';
 
-export default function PostItem({ post }) {
+import DeleteIcon from '@mui/icons-material/Delete';
+import ThumbUpIcon from '@mui/icons-material/ThumbUp';
+
+export default function PostItem({
+    post,
+    deleteItem,
+    canDelete,
+    hasLike,
+    onLike,
+    onDislike
+}) {
+    const toggleLike = () => {
+        hasLike
+            ? onDislike(post._id)
+            : onLike(post._id);
+    }
+
     if (!post) {
         return null;
     }
 
     return (
         <Item>
-            <Box sx={{ borderBottom: '1px solid', borderColor: 'grey.300', p: 2, height: '50px' }}>
-                <Link
-                    component="button"
-                    variant="body2"
-                    onClick={() => {
-                        console.info("I'm a button.");
-                    }}
-                    sx={{ fontWeight: 900 }}
-                >
-                    {post.title}
-                </Link>
-            </Box>
-            <Box sx={{ p: 1, m: 1 }}>
-                <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                    <Avatar alt={post.author.name} src={post.author.avatar} />
-                    <Box sx={{ paddingLeft: '10px' }}>{post.author.email}</Box>
+            <Box>
+                <Box sx={{ borderBottom: '1px solid', borderColor: 'grey.300', p: 2, height: '50px' }}>
+                    <Link
+                        component="button"
+                        variant="body2"
+                        onClick={() => {
+                            console.info("I'm a button.");
+                        }}
+                        sx={{ fontWeight: 900 }}
+                    >
+                        {post.title}
+                    </Link>
                 </Box>
-            </Box>
-            <Box sx={{ p: 1, m: 1, fontWeight: 400 }}>
-                {post.text}
-            </Box>
-            {post.tags && post.tags.length > 0 &&
+                <Box sx={{ p: 1, m: 1 }}>
+                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                        <Avatar alt={post.author.name} src={post.author.avatar} />
+                        <Box sx={{ paddingLeft: '10px' }}>{post.author.email}</Box>
+                    </Box>
+                </Box>
                 <Box sx={{ p: 1, m: 1, fontWeight: 400 }}>
-                    Tags: {post.tags.map(tag => (<Chip key={tag} label={tag}></Chip>))}
+                    {post.text}
                 </Box>
-            }
+                {post.tags && post.tags.length > 0 &&
+                    <Box sx={{ p: 1, m: 1, fontWeight: 400 }}>
+                        Tags: {post.tags.map(tag => (<Chip key={tag} label={tag} />))}
+                    </Box>
+                }
+                {post.likes && post.likes.length > 0 &&
+                    <Box sx={{ p: 1, m: 1, fontWeight: 400 }}>
+                        Likes: <Chip label={post.likes.length} variant="outlined" />
+                    </Box>
+                }
 
-            <Box sx={{ p: 1, m: 1 }}>
-                <Stepper orientation="vertical">
-                    <Step>
-                        <StepLabel>{new Date(post.created_at).toLocaleString()}</StepLabel>
-                    </Step>
-                    <Step>
-                        <StepLabel>{`Last edit ${new Date(post.updated_at).toLocaleString()}`}</StepLabel>
-                    </Step>
-                </Stepper>
+                <Box sx={{ p: 1, m: 1 }}>
+                    <Stepper orientation="vertical">
+                        <Step>
+                            <StepLabel>{new Date(post.created_at).toLocaleString()}</StepLabel>
+                        </Step>
+                        <Step>
+                            <StepLabel>{`Last edit ${new Date(post.updated_at).toLocaleString()}`}</StepLabel>
+                        </Step>
+                    </Stepper>
+                </Box>
             </Box>
 
+            <Box sx={{ p: 1, m: 1 }}>
+                {canDelete &&
+                    <IconButton aria-label="delete" onClick={() => deleteItem(post._id)}>
+                        <DeleteIcon />
+                    </IconButton>
+                }
+                <IconButton aria-label="like" onClick={toggleLike} color={hasLike ? "primary" : undefined}>
+                    <ThumbUpIcon />
+                </IconButton>
+            </Box>
         </Item>
     );
 }
@@ -62,6 +96,9 @@ function Item(props) {
     return (
         <Box
             sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'space-between',
                 bgcolor: '#fff',
                 color: 'grey.800',
                 border: '1px solid',
