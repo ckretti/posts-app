@@ -1,24 +1,26 @@
 import React from 'react';
 
 import Box from '@mui/material/Box';
-import Link from '@mui/material/Link';
 import Avatar from '@mui/material/Avatar';
 import Chip from '@mui/material/Chip';
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
 import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
 
 import DeleteIcon from '@mui/icons-material/Delete';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
+import EditIcon from '@mui/icons-material/Edit';
 
 export default function PostItem({
     post,
     deleteItem,
-    canDelete,
+    isMyPost,
     hasLike,
     onLike,
-    onDislike
+    onDislike,
+    onEditPost
 }) {
     const toggleLike = () => {
         hasLike
@@ -34,16 +36,7 @@ export default function PostItem({
         <Item>
             <Box>
                 <Box sx={{ borderBottom: '1px solid', borderColor: 'grey.300', p: 2, height: '50px' }}>
-                    <Link
-                        component="button"
-                        variant="body2"
-                        onClick={() => {
-                            console.info("I'm a button.");
-                        }}
-                        sx={{ fontWeight: 900 }}
-                    >
-                        {post.title}
-                    </Link>
+                    <Typography variant="h6">{post.title}</Typography>
                 </Box>
                 <Box sx={{ p: 1, m: 1 }}>
                     <Box sx={{ display: 'flex', alignItems: 'center' }}>
@@ -56,7 +49,13 @@ export default function PostItem({
                 </Box>
                 {post.tags && post.tags.length > 0 &&
                     <Box sx={{ p: 1, m: 1, fontWeight: 400 }}>
-                        Tags: {post.tags.map(tag => (<Chip key={tag} label={tag} />))}
+                        Tags: {post.tags.map((tag, index) => (
+                            <Chip
+                                sx={{ ml: index > 0 ? 1 : 0 }}
+                                key={tag}
+                                label={tag}
+                            />
+                        ))}
                     </Box>
                 }
                 {post.likes && post.likes.length > 0 &&
@@ -78,7 +77,7 @@ export default function PostItem({
             </Box>
 
             <Box sx={{ p: 1, m: 1 }}>
-                {canDelete &&
+                {isMyPost &&
                     <IconButton aria-label="delete" onClick={() => deleteItem(post._id)}>
                         <DeleteIcon />
                     </IconButton>
@@ -86,6 +85,11 @@ export default function PostItem({
                 <IconButton aria-label="like" onClick={toggleLike} color={hasLike ? "primary" : undefined}>
                     <ThumbUpIcon />
                 </IconButton>
+                {isMyPost &&
+                    <IconButton aria-label="like" onClick={() => onEditPost(post)} color={hasLike ? "primary" : undefined}>
+                        <EditIcon />
+                    </IconButton>
+                }
             </Box>
         </Item>
     );

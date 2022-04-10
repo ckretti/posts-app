@@ -1,14 +1,14 @@
 import React from 'react';
 
 import Header from './header';
-import PostList from './postList';
+import Main from './main';
 import Footer from './footer';
 
 export default function App() {
     return (
         <>
             <Header />
-            <PostList/>
+            <Main />
             <Footer />
         </>
     );
