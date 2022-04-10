@@ -38,12 +38,14 @@ export default function PostItem({
                 <Box sx={{ borderBottom: '1px solid', borderColor: 'grey.300', p: 2, height: '50px' }}>
                     <Typography variant="h6">{post.title}</Typography>
                 </Box>
-                <Box sx={{ p: 1, m: 1 }}>
-                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                        <Avatar alt={post.author.name} src={post.author.avatar} />
-                        <Box sx={{ paddingLeft: '10px' }}>{post.author.email}</Box>
+                {!!post.author &&
+                    <Box sx={{ p: 1, m: 1 }}>
+                        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                            <Avatar alt={post.author.name} src={post.author.avatar} />
+                            <Box sx={{ paddingLeft: '10px' }}>{post.author.email}</Box>
+                        </Box>
                     </Box>
-                </Box>
+                }
                 <Box sx={{ p: 1, m: 1, fontWeight: 400 }}>
                     {post.text}
                 </Box>

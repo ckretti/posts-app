@@ -78,7 +78,7 @@ export default function PostList() {
 
                 {posts.map((post) => (
                     <PostItem
-                        isMyPost={post.author.email === userData.email}
+                        isMyPost={!!post.author && post.author.email === userData.email}
                         hasLike={post.likes.some(x => x === userData._id)}
                         post={post}
                         key={post._id}
