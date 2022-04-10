@@ -1,6 +1,6 @@
 import React from 'react';
 
-import PostList from './postList';
+import PostList from './list/postList';
 
 import { useFetchUserData } from './data/useFetchUserData';
 import { UserContext } from './userContext/userContext';

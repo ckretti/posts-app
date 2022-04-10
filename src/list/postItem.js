@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { useNavigate } from "react-router-dom";
+
 import Box from '@mui/material/Box';
 import Avatar from '@mui/material/Avatar';
 import Chip from '@mui/material/Chip';
@@ -7,7 +9,7 @@ import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
 import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
+import Link from '@mui/material/Link';
 
 import DeleteIcon from '@mui/icons-material/Delete';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
@@ -22,6 +24,7 @@ export default function PostItem({
     onDislike,
     onEditPost
 }) {
+    const navigate = useNavigate();
     const toggleLike = () => {
         hasLike
             ? onDislike(post._id)
@@ -36,7 +39,16 @@ export default function PostItem({
         <Item>
             <Box>
                 <Box sx={{ borderBottom: '1px solid', borderColor: 'grey.300', p: 2, height: '50px' }}>
-                    <Typography variant="h6">{post.title}</Typography>
+                    <Link
+                        component="button"
+                        variant="body2"
+                        onClick={() => {
+                            navigate(`/post-detail/${post._id}`);
+                        }}
+                        sx={{ fontWeight: 900 }}
+                    >
+                        {post.title}
+                    </Link>
                 </Box>
                 {!!post.author &&
                     <Box sx={{ p: 1, m: 1 }}>
@@ -54,7 +66,7 @@ export default function PostItem({
                         Tags: {post.tags.map((tag, index) => (
                             <Chip
                                 sx={{ ml: index > 0 ? 1 : 0 }}
-                                key={tag}
+                                key={tag + index}
                                 label={tag}
                             />
                         ))}

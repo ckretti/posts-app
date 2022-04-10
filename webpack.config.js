@@ -5,14 +5,15 @@ module.exports = {
   entry: path.resolve(__dirname, "src/index.js"), //точка входа в наше приложение содержит абсолютный путь к index.js
   output: {
     path: path.resolve(__dirname, "dist"), //путь куда будет собираться наш проект
-    filename: "main.js", // имя нашего бандла
+    filename: "main.js", // имя нашего бандла,
+    publicPath: "/",
   },
   devtool: 'cheap-module-source-map',
   devServer: {
     static: path.resolve(__dirname, "./dist"), // путь, куда "смотрит" режим разработчика
     compress: true, // это ускорит загрузку в режиме разработки
     port: 8080, // порт, чтобы открывать сайт по адресу localhost:8080, но можно поменять порт
-    open: '/  ', // сайт будет открываться сам при запуске npm run dev
+    open: '/', // сайт будет открываться сам при запуске npm run dev
     hot: true,
     host: 'localhost',
     headers: {

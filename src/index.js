@@ -11,6 +11,7 @@ import { createTheme, ThemeProvider as MuiThemeProvider } from '@mui/material';
 
 import App from './app';
 import NotFound from './notFound';
+import DetailPage from './post-detail/detailPage';
 
 const MOUNT_NODE = document.getElementById('root');
 
@@ -21,7 +22,8 @@ ReactDOM.render(
         <MuiThemeProvider theme={theme}>
             <BrowserRouter>
                 <Routes>
-                    <Route path="/" element={<App />} />
+                    <Route path="/" index element={<App />} />
+                    <Route path="post-detail/:postId" element={<DetailPage />} />
                     <Route path="*" element={<NotFound />} />
                 </Routes>
             </BrowserRouter>

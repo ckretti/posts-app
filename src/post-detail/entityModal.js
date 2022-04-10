@@ -10,8 +10,8 @@ import Modal from '@mui/material/Modal';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 
-import { useCreatePost } from './data/useCreatePost';
-import { useEditPost } from './data/useEditPost';
+import { useCreatePost } from '../data/useCreatePost';
+import { useEditPost } from '../data/useEditPost';
 
 export default function EntityModal({
     open,

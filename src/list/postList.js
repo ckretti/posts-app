@@ -1,17 +1,17 @@
 import React from 'react';
 
-import { UserContext } from './userContext/userContext'
+import { UserContext } from '../userContext/userContext'
 
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link'
 
 import PostItem from './postItem';
-import EntityModal from './entityModal';
+import EntityModal from '../post-detail/entityModal';
 
-import { useFetchPosts } from './data/useFetchPosts';
-import { useDeletePost } from './data/useDeletePost';
-import { useLikePost } from './data/useLikePost';
-import { useDislikePost } from './data/useDislikePost';
+import { useFetchPosts } from '../data/useFetchPosts';
+import { useDeletePost } from '../data/useDeletePost';
+import { useLikePost } from '../data/useLikePost';
+import { useDislikePost } from '../data/useDislikePost';
 
 export default function PostList() {
     const [open, setVisibility] = React.useState();
